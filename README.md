@@ -24,7 +24,7 @@ Definitions of the following subroutines:
 The algorithms in this file take on a different approach at localising oriC. Rather than searching for frequently repeated sequences, they help locate the forward and reverse half-strands by calculating the G/C content in a genome, the composition of which changes across the genome as a result of cytosine undergoing deanimation. A skew diagram is also used, highlighting the minimum skew and therefore indicating the location of oriC. This file also takes into account the circular genomes of prokaryotes, as the file before it assumed genomes to be linear.
 
 Definitions of the following subroutines:
-- SymbolArray(Genome, symbol): counts the occurences of a symbol symbol, using PatternCount, in a circular genome Genome in each moving window of length n (n = len(Genome)
+- SymbolArray(Genome, symbol): counts the occurences of a symbol symbol, using PatternCount, in a circular genome Genome in each moving window of length n (n = len(Genome))
 - FasterSymbolArray(Genome, symbol): a faster, more effective algorithm than SymbolArray; the same character is not counted more than once if it appears in a different window
 - SkewArray(Genome): cumultatively scores a genome based on G/C content across the length of the genome
 - MinimumSkew(Genome): lists all positions within the genome where SkewArray reaches a minimum
