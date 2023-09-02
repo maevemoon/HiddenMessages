@@ -122,7 +122,7 @@ def ProfileGeneratedString(Text, profile, k):
     return WeightedDie(probabilities)
 
 # Input:  A set of k-mers Motifs
-# Output: The score of these k-mers.
+# Output: The score of these k-mers
 def Score(Motifs):
     # Insert code here
     k = len(Motifs[0])
@@ -136,10 +136,8 @@ def Score(Motifs):
     return score
 
 # Input:  A set of kmers Motifs
-# Output: A consensus string of Motifs.
-
+# Output: A consensus string of Motifs
 def ConsensusWithPseudocounts(Motifs):
-    # insert your code here
     k = len(Motifs[0])
     count = CountWithPseudocounts(Motifs)
     consensus = ""
