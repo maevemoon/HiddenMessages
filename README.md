@@ -40,12 +40,32 @@ Definitions of the following subroutines:
 The algorithms in this file provide a completely different approach into finding and counting the most frequently-repeated sequences in DNA strands. Unlike the two PatternMatching algorithms, it is assumed the pattern of the most frequent k-mer in DNA is not known. Unlike FrequentWords, it uses Motif Discovery to gradually create the most probable consensus string, acknowledging mismatches, to act as the most frequent k-mer in a DNA string.
 
 Definitions of the following subroutines:
-- Count(Motifs): Given a collection of Motifs, counts the occurrences of each nucleotide in Motifs at each position i in a string of Motifs of length j. Returns this count as a dictionary
-- Profile(Motifs): Given a collection of Motifs, computes the count, and then finds the fractional probability of encountering a given nucleotide in Motifs at each position i in a string of Motifs of length j. Returns this profile as a dictionary
-- Consensus(Motifs): Given a collection of Motifs, finds the most probable sequence of nucleotides in Motifs for each given position. Returns this consensus sequence as a string
-- Score(Motifs): Computes the consensus string, and then summation counts all mismatches of this consensus string to the strings in Motifs. Returns this count as an integer
-- Pr(Text, Profile): Given string Text and the probabilities in Profile(Motifs), finds the total probability (independent events) of encountering that string. Returns this probability as a float
-- ProfileMostProbableKmer(Text, k, Profile) : Given string Text, the length of the k-mer and probabilities in Profile(Motifs), generate the total probabilities of finding a k-mer of length k in Text and find the k-mer with the highest probability. Return this k-mer as a string
+- Count(Motifs): given a collection of motifs Motifs, counts the occurrences of each nucleotide in Motifs at each position i in a string of Motifs of length j. Returns this count as a dictionary
+- Profile(Motifs): given a collection of motifs Motifs, computes the count, and then finds the fractional probability of encountering a given nucleotide in Motifs at each position i in a string of Motifs of length j. Returns this profile as a dictionary
+- Consensus(Motifs): given a collection of motifs Motifs, finds the most probable sequence of nucleotides in Motifs for each given position. Returns this consensus sequence as a string
+- Score(Motifs): computes the consensus string consensus, and then summation counts all mismatches of this consensus string to the strings in Motifs. Returns this count as an integer
+- Pr(Text, Profile): given string Text and the probabilities in Profile(Motifs), finds the total probability (independent events) of encountering that string. Returns this probability as a float
+- ProfileMostProbableKmer(Text, k, Profile) : given string Text, the length of the k-mer k and probabilities in Profile(Motifs), generate the total probabilities of finding a k-mer in Text and find the k-mer with the highest probability. Return this k-mer as a string
+
+## 5. pseudocounts.py
+The algorithms in this file are improved from motifs.py by using Laplace's Rule of Succession to remove unfair scoring to the probabilities calculated previously. An entire k-mer can have a probability of 0 simply because one base has a probability of 0. Pseudocounts are added into these algorithms in order to build a profile where all probabilities are bigger than 0. 
+
+Definitions of the following subroutines:
+- GreedyMotifSearch(Dna, k, t): finds the set of motifs Motifs across t strings that match each other most closely, scores it, and returns a list of the k-mers with the lowest scores
+- CountWithPseudocounts(Motifs): given a collection of motifs Motifs, counts the occurrences of each nucleotide in Motifs at each position i in a string of Motifs of length j while adding pseudocounts. Returns this count as a dictionary
+- ProfileWithPseudocounts(Motifs): given a collection of motifs Motifs, computes the count while adding pseudocounts, and then finds the fractional probability of encountering a given nucleotide in Motifs at each position i in a string of Motifs of length j. Returns this profile as a dictionary
+- ConsensusWithPseudocounts(Motifs): given a collection of motifs Motifs, finds the most probable sequence of nucleotides in Motifs for each given position while adding pseudocounts. Returns this consensus sequence as a string
+- GreedyMotifSearchWithPseudocounts(Dna, k, t): finds the set of motifs across t strings that match each other most closely while adding pseudocounts, scores it, and returns a list of the k-mers with the lowest scores
+
+## 6. gibbssampling.py
+The final few algorithms for the Hidden Messages project using Gibbs Sampling, ultimately combining everything written previously to fairly find, count, and consider the most frequently-repeated sequences in DNA strands. It begins as a function RandomMotifs(Dna, k, t), before it is improved one final time into GibbsSampler(Dna, k, t, n) which can overcome hurdles around the local optima and potentially reach the global optimum.
+
+Definitions of the following subroutines:
+- RandomMotifs(Dna, k, t): finds randomly-chosen motifs Motifs at each run
+- GibbsSampler(Dna, k, t, n): begin by finding randomly-chosen motifs Motifs, and with every subsequent run, randomly change one string from a a list of t sitrings, change one motif to another by rolling a weighted die based on their probabilities. Return the set of Motifs and the total score
+- Normalize(Probabilities): rescales a collection of probabilities so they sum to 1
+- WeightedDie(Probabilities): simulates rolling a die so that the probability of rolling the i-th side of the die corresponds to the probability of the i-th k-mer in the list
+- ProfileGeneratedString(Text, profile, k): after normalizing and rolling a die, randomly chooses a k-mer from a string Text based on a profile matrix Profile
 
 
 This project was supported by the "Bioinformatics for Beginners" course authorised by UC San Diego.
