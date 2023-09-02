@@ -5,7 +5,7 @@
 # RETURNING THE PROFILE MATRIX OF MOTIFS WITH PSEUDOCOUNTS
 # Input:  A set of kmers Motifs
 # Output: ProfileWithPseudocounts(Motifs)
-def Consensus(Motifs):
+def ConsensusWithPseudocounts(Motifs):
     k = len(Motifs[0])
     count = CountWithPseudocounts(Motifs)
     # we are going to build this string one by one - so first define as an empty string
@@ -33,7 +33,7 @@ def Consensus(Motifs):
 def Score(Motifs):
     t = len(Motifs)
     k = len(Motifs[0])
-    consensus = Consensus(Motifs)
+    consensus = ConsensusWithPseudocounts(Motifs)
     score = 0
     for i in range(t):
         for j in range(k):
@@ -74,7 +74,7 @@ def ProfileMostProbableKmer(text, k, profile):
     kmer = text[x:x+k]
     return kmer
 
-# the greedymotifsearch algorithm finds the set of motifs across a number of dna sequences that match each other most closely
+# GreedyMotifSearch finds the set of motifs across a number of dna sequences that match each other most closely
 # we run through the first string and find all kmers
 # for all other strings, we find the closest kmers to the original, create a set from it, and then score it
 # the lowest score is best - once we find the set that contains them we take the kmers and represent them as a list
