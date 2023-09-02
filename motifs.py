@@ -122,28 +122,3 @@ def ProfileMostProbableKmer(text, k, profile):
             x = i
     kmer = text[x:x+k]
     return kmer
-
-# Input:  A list of k-mers Dna, and integers k and t (where t is the number of k-mers in Dna)
-# Output: GreedyMotifSearch(Dna, k, t)
-def GreedyMotifSearch(Dna, k, t):
-    BestMotifs = []
-    # we start by setting BestMotifs equal to the first kmer from each DNA string
-    # these now count as the best-scoring motifs
-    for i in range(0,t):
-        BestMotifs.append(Dna[i][0:k])
-    n = len(Dna[0])
-    # now we range through the first dna string for the length of the k-mer
-    # we find all the kmers and add them to our list of motifs
-    for i in range(n-k+1):
-        Motifs = []
-        Motifs.append(Dna[0][i:i+k])
-        # this inner loop goes for every set made from the first string, and finds the most probable kmer through all the further strings
-        # t = amount of strings
-        for j in range(1,t):
-            P = Profile(Motifs[0:j])
-            Motifs.append(ProfileMostProbableKmer(Dna[j],k,P))
-        # once we have our set fully made, we now score it
-        # if the score is less than the current score of bestmotifs, we redefine bestmotifs to be the smaller scored motifs
-        if Score(Motifs) < Score(BestMotifs):
-            BestMotifs = Motifs
-    return BestMotifs
