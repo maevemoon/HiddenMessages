@@ -29,9 +29,23 @@ Definitions of the following subroutines:
 - SkewArray(Genome): cumultatively scores a genome based on G/C content across the length of the genome
 - MinimumSkew(Genome): lists all positions within the genome where SkewArray reaches a minimum
   
-## 3. x
+## 3. improvedpatternfinding.py
+These two algorithms directly build off patternfinding.py by allowing for mismatches between strings, as a common occurence in DNA. The amount of these mismatches can be referred to as the hamming distance; the number of positions in which the two bases are different when comparing two strings of DNA. DnaA can bind to slightly modified DnaA boxes in the oriC, so these algorithms take this into account and return the starting positions of all occurences of a known Pattern with at most d mismatches.
 
-## 4. x
+Definitions of the following subroutines:
+- ApproximatePatternMatching(Text, Pattern, d): lists every starting position for a specified pattern Pattern within a string Text with at most d mismatches
+- HammingDistance(p, q): returns an integer value representing the hamming distance between two strings p and q
+
+## 4. motifs.py
+The algorithms in this file provide a completely different approach into finding and counting the most frequently-repeated sequences in DNA strands. Unlike the two PatternMatching algorithms, it is assumed the pattern of the most frequent k-mer in DNA is not known. Unlike FrequentWords, it uses Motif Discovery to gradually create the most probable consensus string, acknowledging mismatches, to act as the most frequent k-mer in a DNA string.
+
+Definitions of the following subroutines:
+- Count(Motifs): Given a collection of Motifs, counts the occurrences of each nucleotide in Motifs at each position i in a string of Motifs of length j. Returns this count as a dictionary
+- Profile(Motifs): Given a collection of Motifs, computes the count, and then finds the fractional probability of encountering a given nucleotide in Motifs at each position i in a string of Motifs of length j. Returns this profile as a dictionary
+- Consensus(Motifs): Given a collection of Motifs, finds the most probable sequence of nucleotides in Motifs for each given position. Returns this consensus sequence as a string
+- Score(Motifs): Computes the consensus string, and then summation counts all mismatches of this consensus string to the strings in Motifs. Returns this count as an integer
+- Pr(Text, Profile): Given string Text and the probabilities in Profile(Motifs), finds the total probability (independent events) of encountering that string. Returns this probability as a float
+- ProfileMostProbableKmer(Text, k, Profile) : Given string Text, the length of the k-mer and probabilities in Profile(Motifs), generate the total probabilities of finding a k-mer of length k in Text and find the k-mer with the highest probability. Return this k-mer as a string
 
 
 This project was supported by the "Bioinformatics for Beginners" course authorised by UC San Diego.
